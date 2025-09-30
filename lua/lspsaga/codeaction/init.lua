@@ -244,7 +244,7 @@ local function apply_action(action, client, enriched_ctx)
         arguments = command.arguments,
         workDoneToken = command.workDoneToken,
       }
-      client.request('workspace/executeCommand', params, nil, enriched_ctx.bufnr)
+      client:request('workspace/executeCommand', params, nil, enriched_ctx.bufnr)
     end
   end
   clean_ctx()
@@ -268,7 +268,7 @@ end
 
 function act:do_code_action(action, client, enriched_ctx)
   if not action.edit and client and self:support_resolve(client) then
-    client.request('codeAction/resolve', action, function(err, resolved_action)
+    client:request('codeAction/resolve', action, function(err, resolved_action)
       if err then
         vim.notify(err.code .. ': ' .. err.message, vim.log.levels.ERROR)
         return
